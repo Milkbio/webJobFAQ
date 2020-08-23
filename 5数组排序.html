@@ -7,18 +7,21 @@
         div {
             cursor: pointer;
         }
+
         #div1 {
             padding: 40px;
             width: 280px;
             height: 180px;
             background: red;
         }
+
         #div2 {
             padding: 40px;
             width: 200px;
             height: 100px;
             background: green;
         }
+
         #div3 {
             width: 200px;
             height: 100px;
@@ -71,7 +74,6 @@
         return this
     }
 
-    let arr = [3, 1, 6, 3, 2, 8, 10, 7, 5, 13, 16, 12, 6]
     /*循环选择排序*/
     Array.prototype.sort2 = function () {
         let min, minIndex = 0
@@ -108,22 +110,26 @@
         return result
     }
 
-    console.log(arr.sort3())
+    /*快速排序*/
+    Array.prototype.quickSort = function () {
+        if (this.length <= 1) return this
+        let left = [], right = [];
+        let num = Math.floor(this.length / 2);
 
+        let numValue = this.splice(num, 1)[0];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] <= numValue) {
+                left.push(this[i]);
+            }
+            if (this[i] > numValue) {
+                right.push(this[i]);
+            }
+        }
+        return left.quickSort().concat([numValue], right.quickSort());
+    }
+    let arr = [17, 8];
+    console.log(arr.quickSort());
 
 </script>
 </body>
