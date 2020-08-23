@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="height: 500px; width: 400px; overflow: auto;" id="div">
+    <div style="height: 2000px; background: red;"></div>
+</div>
+<input type="text" id="input">
+<script>
+    function debounce(fn, delay) {
+        let timer
+        return function () {
+            clearTimeout(timer)
+            let _this = this
+            timer = setTimeout(function () {
+                fn.call(_this)
+            }, delay)
+        }
+    }
+
+    function fn1() {
+        console.log(this.getBoundingClientRect())
+    }
+    div.addEventListener('scroll', debounce(fn1, 300))
+
+    function throttle1(fn, duration) {
+        let timer, flag = true
+        // let start = new Date().getTime()
+        return function () {
+            let _this = this
+
+            if (!flag) return
+            flag = false
+            console.time('ccc')
+            /*立即执行flag=true，第一次输入后flag=false，走到了timer，300ms后执行flag=true
+            * 这300ms内再执行fn，由于定时器还没执行方法，fn未执行，flag依旧为false，导致无法往下执行
+            * 当定时器方法执行完后，flag=true了，再执行fn就可以了
+            * */
+            timer = setTimeout(function () {
+                fn.call(_this)
+                flag = true
+                console.timeEnd('ccc')
+            }, duration)
+        }
+    }
+    function fn2() {
+        console.log(this)
+    }
+    input.addEventListener('input', throttle2(fn2, 1300))
+
+    function throttle2(fn, duration) {
+        let start = Date.now()
+        return function () {
+            let _this = this
+            let end = Date.now()
+            /*立即执行start=0，第一次输入后end=400，走到了timer，300ms后执行
+            * 这300ms内再执行fn，由于定时器还没执行方法，fn未执行，end=800，导致无法往下执行
+            * 当定时器方法执行完后，flag=true了，再执行fn就可以了
+            * */
+            console.log(end - start)
+            if (end - start >= duration) {
+                fn.call(_this)
+                start = end
+            }
+
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1 {position: absolute; top: 100px; left: 100px; width: 100px; height: 100px; background: red; cursor: move;}
+    </style>
+    <script src="./Event.js"></script>
+</head>
+<body>
+<div id="div1"></div>
+<script>
+    class Drag extends Event {
+        constructor (el) {
+            super()
+            this.el = el
+            this.startOffset = {}
+            this.startPoint = {}
+
+            this.move = (e) => {
+                this.onmousemove(e)
+            }
+            this.up = (e) => {
+                this.trigger('dragend', e, this.el)
+                document.removeEventListener('mousemove', this.move)
+                document.removeEventListener('mouseup', this.up)
+            }
+            el.addEventListener('mousedown', (e) => {
+                this.onmousedown(e)
+                document.addEventListener('mousemove', this.move)
+                document.addEventListener('mouseup', this.up)
+            })
+
+        }
+        onmousedown (e) {
+            let {el} = this
+            this.startOffset = {
+                x: el.offsetLeft,
+                y: el.offsetTop
+            }
+            this.startPoint = {
+                x: e.clientX,
+                y: e.clientY
+            }
+            this.trigger('dragstart', e, this.el)
+        }
+        onmousemove (e) {
+            // console.log(e)
+            let {el, startPoint, startOffset} = this
+            el.style.left = (e.clientX - startPoint.x + startOffset.x) + 'px'
+            el.style.top = (e.clientY - startPoint.y + startOffset.y) + 'px'
+        }
+    }
+
+    let el = document.querySelector('#div1')
+    let d = new Drag(el)
+    d.on('dragstart', function (e) {
+        this.style.background = 'yellow'
+    })
+    d.on('dragend', function (e) {
+        this.style.background = 'red'
+    })
+    /*let e = new Event()
+    e.on('click', function () {
+        console.log(1)
+    })
+    e.on('click', function () {
+        console.log(2)
+    })
+    e.trigger('click')*/
+</script>
+</body>
+</html>

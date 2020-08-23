@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .wrapper {
+            overflow: hidden;
+        }
+        .wrapper>* {
+            float: left;
+            height: 300px;
+        }
+        .center {
+            width: 100%;
+            background: pink;
+        }
+        .content {
+            margin: 0 200px 0 300px;
+        }
+        .left {
+            width: 300px;
+            background: lightgreen;
+            margin-left: -100%;
+        }
+        .right {
+            width: 200px;
+            background: lightblue;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="center">
+        <div class="content">ddd</div>
+    </div>
+    <div class="left">ccc</div>
+    <div class="right">aaa</div>
+</div>
+<script>
+    /*Object.prototype.sayName = function () {
+        console.log(this.name)
+    }*/
+    /*function Person (name, age) {
+        this.name = name
+        this.age = age
+    }
+    Person.prototype.sayName = function () {
+        console.log(this.name)
+    }
+    Person.prototype.sayAge = function () {
+        console.log(this.age)
+    }
+
+    Person.prototype.tools = {
+        a: 'pencil',
+        b: 'pen'
+    }
+
+    function Japan() {
+        this.name = 'japan'
+    }
+    Japan.prototype = new Person()
+    let j = new Japan()*/
+
+    /*function Chinese(name, age, skill) {
+        Person.call(this, name, age)
+        this.skill = skill
+    }
+    Chinese.prototype = genProto(Person)
+    function genProto (c) {
+        function P () {}
+        P.prototype = c.prototype
+        return new P
+    }
+
+    let xm = new Person('xiaoming', 18)
+    console.log('xm', xm)
+
+    let lh = new Chinese('lihua', 21, '吃')
+    lh.sayAge()
+
+    function American(name, age, skill) {
+        Person.call(this, name, age)
+        this.skill = skill
+    }
+    for (let p in Person.prototype) {
+        American.prototype[p] = Person.prototype[p]
+    }
+
+    American.prototype.tools = {
+        c: 'computer'
+    }
+
+    let tom = new American('tom', 18, 'eat')
+    console.log('tom', tom)*/
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    </style>
+</head>
+<body>
+<script>
+    /*let Animal = {
+        ant: function () {
+            let fn = function (x) {
+                console.log(x)
+            }
+            fn.bind(this)(3)
+        },
+        cat: 'cat'
+    }
+    Animal.ant()
+
+
+
+    function f(y, z) {
+        return this.x + y + z;
+    }
+    var m = f.bind({x: 1});
+    console.log(m(2,3));*/
+
+
+    Function.prototype.bindM = function (cxt, ...arg1) {
+        let _this = this
+        function fn (...arg2) {
+            _this.apply(cxt, [...arg1, ...arg2])
+        }
+        fn.prototype = Object.create(_this.prototype)
+        fn.prototype.constructor = this
+        return fn
+    }
+
+
+    function f(...arg) {
+        console.log(this)
+        console.log(arg)
+    }
+    f.prototype.mv = function () {
+        console.log('%cmv', 'pink')
+    }
+    let newF = f.bind(1, 1, 2, 3, 4)
+    let newF2 = f.bindM({a: 1}, 1, 2, 3, 4)
+
+    let f1 = new newF()
+    let f2 = new newF2()
+</script>
+</body>
+</html>

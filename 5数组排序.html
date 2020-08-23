@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            cursor: pointer;
+        }
+        #div1 {
+            padding: 40px;
+            width: 280px;
+            height: 180px;
+            background: red;
+        }
+        #div2 {
+            padding: 40px;
+            width: 200px;
+            height: 100px;
+            background: green;
+        }
+        #div3 {
+            width: 200px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+<!--<div id="div1" index="1">
+    <div id="div2">
+        <div id="div3"></div>
+    </div>
+</div>-->
+<script>
+    // var arr = [3, 1, 6, 3, 2, 8, 10, 7, 5, 13, 16, 12, 6]
+    /*function sort (arr) {
+        for (let j = 0; j < arr.length - 1; j++) {
+            let ok = true
+            for (let i = 0; i < arr.length - 1 -j; i++) {
+                let x = arr[i]
+                let y = arr[i + 1]
+
+                if (x > y) {
+                    arr[i] = y
+                    arr[i + 1] = x
+                    ok = false
+                }
+                console.log(arr.toString())
+            }
+            if (ok) break
+        }
+
+        return arr
+    }
+    console.log(sort(arr))*/
+
+    /*冒泡排序*/
+    Array.prototype.sort1 = function () {
+        for (let i = 0; i < this.length - 1; i++) {
+            for (let j = 0; j < this.length - 1 - i; j++) {
+                let x = this[j]
+                let y = this[j + 1]
+
+                if (x > y) {
+                    this[j] = y
+                    this[j + 1] = x
+                }
+            }
+        }
+        return this
+    }
+
+    let arr = [3, 1, 6, 3, 2, 8, 10, 7, 5, 13, 16, 12, 6]
+    /*循环选择排序*/
+    Array.prototype.sort2 = function () {
+        let min, minIndex = 0
+        let result = []
+        for (let i = 0; i < this.length; i++) {
+            min = this[i]
+            for (let j = i + 1; j < this.length; j++) {
+                // debugger
+                if (this[j] < min) {
+                    min = this[j]
+                    minIndex = j
+                }
+            }
+            result = this.splice(minIndex, 1)
+            minIndex = 0
+            i--
+        }
+        return result
+    }
+
+    /*递归选择排序*/
+    Array.prototype.sort3 = function () {
+        if (this.length <= 1) return this
+        let min = this[0], minIndex = 0, result
+
+        for (let i = 0; i < this.length; i++) {
+            if (min > this[i]) {
+                min = this[i]
+                minIndex = i
+            }
+        }
+        result = this.splice(minIndex, 1).concat(this.sort3(this))
+
+        return result
+    }
+
+    console.log(arr.sort3())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

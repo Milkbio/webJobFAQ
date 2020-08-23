@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    </style>
+</head>
+<body>
+<script>
+    // 1 1 2 3 5 8 13 21 34
+    function fibonacci(n) {
+        let n1 = 0, n2 = 1, sum = n1 + n2;
+        for (let i = 1; i < n; i++) {
+            sum = n1 + n2;
+            n1 = n2;
+            n2 = sum;
+        }
+        return sum;
+    }
+    console.log(fibonacci(9))
+</script>
+</body>
+</html>

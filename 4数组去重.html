@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let array = [1, 1, 2, 1, 2, 3]
+
+    // 第一种方法
+    function removeRepeat1(array) {
+        const result = []
+        array.forEach(x => {
+            if (result.indexOf(x) < 0) result.push(x)
+        })
+        return result
+    }
+    let array1 = removeRepeat1(array)
+
+    // 第二种方法
+    let array2 = Array.from(new Set(array))
+
+    // 第三种方法
+    function removeRepeat3(array) {
+        for (let i = 0; i < array.length; i++) {
+            for (let j = i + 1; j < array.length; j++) {
+                if (array[i] === array[j]) {
+                    array.splice(j, 1)
+                    j--
+                }
+            }
+        }
+        return array
+    }
+    let array3 = removeRepeat3(array)
+</script>
+</body>
+</html>

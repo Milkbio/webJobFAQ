@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./compile.js"></script>
+    <script src="./vue.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 插值绑定 -->
+    <p>{{name}}</p>
+    <!-- 指令解析 -->
+    <p k-text="cbd"></p>
+    <p>{{age}}</p>
+    <p>
+        {{doubleAge}}
+    </p>
+    <p>{{model}}</p>
+    <!-- 双向绑定 -->
+    <input type="text" k-model="model" />
+    <!-- 事件处理 -->
+    <button @click="changeProps">呵呵</button>
+    <!-- html内容解析 -->
+    <div k-html="html"></div>
+</div>
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            name: 'vue',
+            age: 1,
+            doubleAge: 2,
+            cbd: 'CBD',
+            html: `<a href="http://www.baidu.com">百度</a>`,
+            model: ''
+        },
+        created() {
+            /*setTimeout(() => {
+                this.name = 'kvue'
+                this.age = '18'
+                this.doubleAge = '36'
+            }, 1000)*/
+        },
+        methods: {
+            changeProps() {
+                this.name = '修改name'
+                this.age = 22
+            }
+        }
+    })
+    // vue.$data.aa = 'aaaaa'
+
+    /*let obj = {
+        x: 1
+    }
+    Object.keys(obj).forEach(key => {
+        re(obj, key, obj[key])
+    })
+    function re(obj, key, val) {
+        Object.defineProperty(obj, key, {
+            get() {
+                console.log('get')
+                return val
+            },
+            set(newVal) {
+                val = newVal
+                console.log(obj[key])
+            }
+        })
+    }
+    obj.x = 2
+    console.log(obj)*/
+</script>
+</body>
+</html>

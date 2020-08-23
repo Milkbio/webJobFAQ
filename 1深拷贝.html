@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*function typeOfFn (x) {
+        let type = typeof(x)
+        if (type === 'object') {
+            let string = Object.prototype.toString.call(x).toLowerCase()
+            type = string.substring(8, string.length - 1)
+        }
+        return type
+    }
+    function extend (x) {
+        let result
+        if (typeOfFn(x) === 'array' || typeOfFn(x) === 'object') {
+            if (typeOfFn(x) === 'array') result = []
+            if (typeOfFn(x) === 'object') result = {}
+            for (let i in x) {
+                if (typeOfFn(x[i]) !== 'array' && typeOfFn(x[i]) !== 'object') {
+                    result[i] = x[i]
+                } else {
+                    result[i] = extend(x[i])
+                }
+            }
+        } else result = x
+        return result
+    }*/
+
+
+
+    function checkRefer(data) {
+        return Object.prototype.toString.call(data).slice(8, -1).toLowerCase()
+    }
+
+    function extend(data) {
+        let result
+        if (checkRefer(data) === 'object') result = {}
+        if (checkRefer(data) === 'array') result = []
+
+        for (let key in data) {
+            if (/object|array/.test(checkRefer(data[key]))) result[key] = extend(data[key])
+            else result[key] = data[key]
+        }
+        
+        return result
+    }
+
+    let obj = {
+        a: 1,
+        b: {
+            name: 'b',
+            children: [1, 2, [3, 4]]
+        },
+        c: {
+            name: 'c'
+        },
+        d: function () {
+            console.log('d')
+        }
+    }
+
+    let obj2 = extend(obj)
+    obj.b.name = 'bb'
+    obj.d = []
+    console.log(obj, obj2)
+</script>
+</body>
+</html>
