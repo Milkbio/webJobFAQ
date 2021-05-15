@@ -75,13 +75,11 @@
         const root = {}
 
         // 栈
-        const loopList = [
-            {
-                parent: root,
-                key: undefined,
-                data: x
-            }
-        ]
+        const loopList = [{
+            key: undefined,
+            parent: root,
+            data: x
+        }]
 
         while (loopList.length) {
             // 深度优先
@@ -89,14 +87,11 @@
             const parent = node.parent
             const key = node.key
             const data = node.data
-
             // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
             let res = parent
-
             if (typeof key !== 'undefined') {
                 res = parent[key] = {}
             }
-
             for (let k in data) {
                 if (data.hasOwnProperty(k)) {
                     if (typeof data[k] === 'object') {
@@ -116,7 +111,6 @@
     }
     const copy = cloneLoop(obj4)
     console.log(copy)
-
 </script>
 </body>
 </html>
