@@ -31,11 +31,11 @@
     }*/
 
 
-
     function checkRefer(data) {
         return Object.prototype.toString.call(data).slice(8, -1).toLowerCase()
     }
 
+    // 缺点，层次关系深时会栈溢出；
     function extend(data) {
         let result
         if (checkRefer(data) === 'object') result = {}
@@ -45,7 +45,7 @@
             if (/object|array/.test(checkRefer(data[key]))) result[key] = extend(data[key])
             else result[key] = data[key]
         }
-        
+
         return result
     }
 
@@ -62,11 +62,63 @@
             console.log('d')
         }
     }
+    /*let object = {a: 1}
+    let wrap = {a: object}
+    for (let i = 0; i < 1; i++) {
+        object = wrap
+        wrap = {a: object}
+    }*/
 
-    let obj2 = extend(obj)
-    obj.b.name = 'bb'
-    obj.d = []
-    console.log(obj, obj2)
+    function cloneLoop(x) {
+        const root = {}
+
+        // 栈
+        const loopList = [
+            {
+                parent: root,
+                key: undefined,
+                data: x
+            }
+        ]
+
+        while (loopList.length) {
+            // 深度优先
+            const node = loopList.pop()
+            const parent = node.parent
+            const key = node.key
+            const data = node.data
+
+            // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+            let res = parent
+
+            if (typeof key !== 'undefined') {
+                res = parent[key] = {}
+            }
+
+            for (let k in data) {
+                if (data.hasOwnProperty(k)) {
+                    if (typeof data[k] === 'object') {
+                        // 下一次循环
+                        loopList.push({
+                            parent: res,
+                            key: k,
+                            data: data[k]
+                        })
+                        // console.log(JSON.stringify(loopList))
+                    } else {
+                        // console.log(1)
+                        res[k] = data[k]
+                    }
+                }
+            }
+        }
+
+        return root
+    }
+
+    const b = cloneLoop(obj)
+    console.log(b)
+
 </script>
 </body>
 </html>
