@@ -69,34 +69,47 @@
         obj3 = {a: obj2}
     }*/
 
-    let obj4 = {a: 1, b: 2, c: 3, d: {da: 41}, e: {ea: 51}}
+    let obj4 = {
+        d: {
+            da: 41
+        },
+        a: 1,
+        b: 2,
+        c: 3,
+        e: {
+            ea: 51
+        },
+        f: {
+            fa: {
+                0: {
+                    faa: 1,
+                    fab: 2
+                }
+            }
+        }
+    }
 
     function cloneLoop(source) {
         const root = {}
 
         // 栈
         const loopList = [{
-            key: undefined,
             parent: root,
+            key: undefined,
             data: source
         }]
 
         while (loopList.length) {
             // 深度优先
             const node = loopList.pop()
-            // 第二次 node = {"parent":{"a":1,"b":2,"c":3},"key":"e","data":{"ea":51}}
             const parent = node.parent
             const key = node.key
             const data = node.data
             // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
             let res = parent
             if (typeof key !== 'undefined') {
-                // console.log(parent[key], key)
                 res = parent[key] = {}
             }
-            // console.log(data)
-            // console.log(res)
-            // data = {a: 1, b: 2, c: 3}
             for (let k in data) {
                 if (data.hasOwnProperty(k)) {
                     if (typeof data[k] === 'object') {
@@ -106,12 +119,15 @@
                             key: k,
                             data: data[k]
                         })
-                        // console.log(JSON.stringify(loopList))
+                        console.log('%c内部res', 'background:red;', JSON.stringify(res))
+                        console.log('%c内部loopList', 'background:lightgreen;', JSON.stringify(loopList))
                     } else {
                         res[k] = data[k] // res为parent或者parent[key] parent为root data为source
                     }
                 }
             }
+            console.log('%cres', 'background:orange;', JSON.stringify(res))
+            console.log('%cloopList', 'background:pink;', JSON.stringify(loopList))
         }
         return root
     }
