@@ -6,6 +6,33 @@
     <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.js"></script>
 </head>
 <body>
+<script>
+    function sum(current, prev) {
+        if (prev == undefined) prev = 0;
+        if (current <= 1) return current + prev;
+        else {
+            return sum(current - 1, current + prev);
+        }
+    }
 
+    function test(f) {
+        return function () {
+            f(arguments);
+        }
+    }
+
+    function trampoline(f) {
+        return function (args) {
+            let result = f(args);
+            while (typeof result === 'function') {
+                result = result();
+            }
+            return result;
+        }
+    }
+
+    const sum0 = trampoline(sum);
+    (sum0(10));
+</script>
 </body>
 </html>
