@@ -61,6 +61,9 @@
     /*冒泡排序*/
     Array.prototype.sort1 = function () {
         for (let i = 0; i < this.length - 1; i++) {
+            // 通过ok开关可以判断本轮外层循环结束后数组中是否还有前面的数>后面的数的情况
+            // 如果没有即表明本轮外层循环就已经从小到大排好，无需进行下一次
+            let ok = true
             for (let j = 0; j < this.length - 1 - i; j++) {
                 let x = this[j]
                 let y = this[j + 1]
@@ -68,8 +71,10 @@
                 if (x > y) {
                     this[j] = y
                     this[j + 1] = x
+                    ok = false
                 }
             }
+            if (ok) break
         }
         return this
     }
